@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="./css/chat.css">
+<script src="./js/chat.js"></script>
+<script src="http://localhost:8000/socket.io/socket.io.js"></script>
+<script>
+var socket = io();
+var server = io.connect("http://localhost:8000");
+var name = "";
+var selectedUser = null;
+
+function onSubmit() {
+	var msg = document.getElementById("msg").value;
+	if(selectedUser != null) {
+		server.emit("messages", msg, selectedUser.id);
+	} else {
+		server.emit("messages", msg, "group");
+	}
+	document.getElementById("msg").value = "";
+}
+
+function usernameValidation() {
+	var uname = prompt("Enter your name");
+	if(uname == null) {
+		window.close();
+	} else if(uname.length == 0) {
+		usernameValidation();
+	} else {
+		return uname;
+	}
+}
+
+server.on("connect", function(data) {
+	
+	name = usernameValidation();
+	server.emit("join", name);
+});
+
+server.on("users", function(data) {
+	
+	updateUsers(data);
+});
+
+function updateUsers(users) {
+	
+	userStr = "";
+	for(var i = 0; i < users.length; i++) {
+		if(users[i].name == name) continue;
+		userStr += "<br>";
+		userStr += "<input type = \"button\" value = \"" + users[i].name +"\" id=\""+users[i].id+"\" class=\"transparentButton2\" onClick=\"userClicked(this)\">";
+	}
+	document.getElementById("users").innerHTML = userStr;
+}
+
+server.on("messages", function(data) {
+	updateMessage(data);
+});
+
+function updateMessage(messages) {
+	
+	var msgStr = "";
+	for(var i = 0; i < messages.length; i++) {
+		
+		msgStr += "<br>";
+		if(messages[i].user == "info") {
+			msgStr +="<div id=\"info\">" + messages[i].message + "</div>";
+		} else if(messages[i].user == name) {
+			msgStr +="<div id=\"self\">" + messages[i].message + "</div>";
+		} else {
+			msgStr +="<div id=\"others\">" + messages[i].message + "</div>";
+		}
+	}
+	document.getElementById("conversations").innerHTML = msgStr;
+}
+function onGroupClicked() {
+	selectedUser = null;
+}
+function userClicked(element) {
+	alert("User Clicked");
+	selectedUser = element;
+}
+
+</script>
+</head>
+<body>
+<div id="header">
+	<h1>OFS Chat Room</h1>
+</div>
+<div id="nav" align=center>
+	<br>
+	<input type = "button" value = "Group" id="transparentButton1" onClick="onGroupClicked()">
+	<br>
+	<div id="available">
+	<h1>Available</h1>
+	<div id="users">
+	</div>
+	</div>
+</div>
+<div id="feed">
+<h1>Conversations :</h1>
+<div id="conversations">
+</div>
+</div>
+<div id="footer">
+	<Input type="text" id="msg" placeholder="Enter the message here..."></input>
+	<Input type="button" id="submit" value="Submit" onClick="onSubmit()"></input>
+</div>
+</body>
+</html>

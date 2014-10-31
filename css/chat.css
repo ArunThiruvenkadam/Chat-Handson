@@ -1,0 +1,71 @@
+#header {
+    background-color:#FF0000;
+    color:white;
+    text-align:center;
+	float:center;
+	height:75px;
+    padding:5px;
+}
+#nav {
+    line-height:30px;
+    background-color:#E6E6FA;
+    height:450px;
+    width:200px;
+	float:left;
+    padding:5px;
+	padding-left:0px;
+	margin:3px;
+}
+#transparentButton1 {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    outline:none;
+}
+.transparentButton2 {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    outline:none;
+}
+#footer {
+    background-color:#C0C0C0;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;	 	 
+}
+input[type="text"]{
+	width:800px;
+	padding:5px;
+	margin-left:25px;
+}
+#submit {
+	height:30px;
+}
+#others {
+	background-color:#FFB6C1;
+	float:center;
+	text-align:right;
+	padding:20px;
+}
+#self {
+	background-color:#FFEFD5;
+	float: center;
+	text-align:left;
+	padding:20px;
+}
+#info {
+	background-color:white;
+	color:red;
+	float: center;
+	text-align:center;
+	padding:20px;
+}
+#conversations {
+	background-color:white;
+	height:400px;
+	overflow-y: auto;
+}
