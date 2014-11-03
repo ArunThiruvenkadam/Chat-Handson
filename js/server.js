@@ -1,7 +1,10 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var fs = require("fs");
 var messages = [];
+var path = require('path');
+app.use(require('express').static(path.join(__dirname, 'public')));
 
 var msgObj = {message:undefined, user:undefined};
 function MsgObj(message, user) {
@@ -13,11 +16,16 @@ function UserObj(id, name) {
 	this.id = id;
 	this.name = name;
 }
+
 // To load html page
-/*app.get('/', function(req, res) {
-	console("html going to render");
-	res.render('./chat.html');
-});*/
+app.get('/', function(req, res) {
+	console.log("html going to render");
+	fs.readFile("../chat.html", function (err, content) {
+		res.write(content);
+		res.end();
+	});
+});
+
 var users = [];
 io.on('connection', function(client){
   
