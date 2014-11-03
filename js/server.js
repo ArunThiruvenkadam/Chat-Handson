@@ -17,14 +17,22 @@ function UserObj(id, name) {
 	this.name = name;
 }
 
-// To load html page
-app.get('/', function(req, res) {
+app.get('/chat', function(req, res) {
 	console.log("html going to render");
 	fs.readFile("../chat.html", function (err, content) {
 		res.write(content);
 		res.end();
 	});
 });
+
+// To load html page
+app.get('/*', function(req, res) {
+	console.log("html going to render");
+	res.writeHead(404);
+	res.end("Page Not Found");
+});
+
+
 
 var users = [];
 io.on('connection', function(client){

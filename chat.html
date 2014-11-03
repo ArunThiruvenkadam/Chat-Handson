@@ -21,8 +21,8 @@ function onSubmit() {
 
 function usernameValidation() {
 	var uname = prompt("Enter your name");
-	if(uname == null) {
-		window.close();
+	if(uname === null) {
+		windlow.close();
 	} else if(uname.length == 0) {
 		usernameValidation();
 	} else {
@@ -72,11 +72,12 @@ function updateMessage(messages) {
 	}
 	document.getElementById("conversations").innerHTML = msgStr;
 }
+
 function onGroupClicked() {
 	selectedUser = null;
 }
+
 function userClicked(element) {
-	alert("User Clicked");
 	selectedUser = element;
 }
 
@@ -102,8 +103,8 @@ function userClicked(element) {
 </div>
 </div>
 <div id="footer">
-	<Input type="text" id="msg" placeholder="Enter the message here..."></input>
-	<Input type="button" id="submit" value="Submit" onClick="onSubmit()"></input>
+	<input type="text" id="msg" placeholder="Enter the message here..."></input>
+	<input type="button" id="submit" value="Submit" onClick="onSubmit()"></input>
 </div>
 </body>
 </html>
