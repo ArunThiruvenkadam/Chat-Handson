@@ -32,8 +32,6 @@ app.get('/*', function(req, res) {
 	res.end("Page Not Found");
 });
 
-
-
 var users = [];
 io.on('connection', function(client){
   
